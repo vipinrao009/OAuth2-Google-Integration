@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaGoogle, FaTwitter } from "react-icons/fa";
+import { FaGoogle} from "react-icons/fa";
+import {useGoogleLogin} from "@react-oauth/google"
 
 const Login = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,6 +13,20 @@ const Login = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const googleResponse = async(authResult)=>{
+    try {
+        console.log(authResult)
+    } catch (error) {
+        console.error('Error while requesting google code : ',error)
+    }
+  }
+
+  const googleLogin = useGoogleLogin({
+    onSuccess:googleResponse,
+    onError:googleResponse,
+    flow:'auth-code'
+  })
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 to-blue-500">
@@ -65,14 +80,8 @@ const Login = () => {
         <div className="text-center mt-6">
           <p className="text-sm text-gray-500">Or Sign up Using</p>
           <div className="flex justify-center space-x-4 mt-4">
-            <button className="p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
-              <FaFacebookF />
-            </button>
-            <button className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition">
+            <button onClick={googleLogin} className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition">
               <FaGoogle />
-            </button>
-            <button className="p-3 bg-blue-400 text-white rounded-full hover:bg-blue-500 transition">
-              <FaTwitter />
             </button>
           </div>
         </div>
