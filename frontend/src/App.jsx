@@ -14,8 +14,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<GoogleAuthWrapper/>} />
-        <Route path="/" element={<Dashboard/>} />
+        <Route path="/" element={<GoogleAuthWrapper/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/register" element={<Signup/>} />
       </Routes>
     </BrowserRouter>

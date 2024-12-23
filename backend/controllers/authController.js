@@ -13,7 +13,6 @@ const login = async(req, res) => {
         const {code} = req.query
         const googleRes = await oAuth2Client.getToken(code)
         oAuth2Client.setCredentials(googleRes.tokens)
-        console.log("first",googleRes)
         const userInfo = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`)
         const {email, name, picture} = userInfo.data
 
@@ -36,8 +35,7 @@ const login = async(req, res) => {
         return res.status(500).json({
             message: "Failed while login",
             error: error.message
-        });
-        
+        }); 
     }
 }
 

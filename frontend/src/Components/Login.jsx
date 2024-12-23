@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle} from "react-icons/fa";
 import {useGoogleLogin} from "@react-oauth/google"
 import {googleAuth} from "../api.js"
+import logo from '../assets/google.jpg'
 
 const Login = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate()
 
   const openModal = () => {
     setModalOpen(true);
@@ -20,6 +22,11 @@ const Login = () => {
       if(authResult['code']){
         const result = await googleAuth(authResult['code'])
         const {name,email,image} = result.data.user
+        const token = result.data.token
+        const obj = {name,email,image,token}
+        localStorage.setItem('user',JSON.stringify(obj))
+        navigate('/dashboard')
+
       }
     } catch (error) {
         console.error('Error while requesting google code : ',error)
@@ -34,73 +41,81 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 to-blue-500">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-        {/* Title */}
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h1>
-
-        {/* Login Form */}
-        <form>
-          {/* Username Input */}
-          <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">Username</label>
-            <input
-              type="text"
-              placeholder="Type your username"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
-            />
-          </div>
-
-          {/* Password Input */}
-          <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">Password</label>
-            <input
-              type="password"
-              placeholder="Type your password"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
-            />
-          </div>
-
-          {/* Forgot Password */}
-          <div className="flex justify-between items-center mb-6">
-            <span></span>
-            <Link
-              onClick={openModal}
-              className="text-sm text-purple-500 hover:underline font-semibold"
-            >
-              Forgot password?
-            </Link>
-          </div>
-
-          {/* Login Button */}
-          <button
-            type="submit"
-            className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-lg hover:opacity-90 transition"
-          >
-            LOGIN
-          </button>
-        </form>
-
-        {/* Social Login */}
-        <div className="text-center mt-6">
-          <p className="text-sm text-gray-500">Or Sign up Using</p>
-          <div className="flex justify-center space-x-4 mt-4">
-            <button onClick={googleLogin} className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition">
-              <FaGoogle />
-            </button>
-          </div>
+      <div className="flex w-full max-w-6xl bg-white rounded-lg shadow-lg overflow-hidden">
+        
+        {/* Image */}
+        <div className="flex items-center justify-center bg-orange-200">
+        <img src={logo} alt="iet_logo" className="object-cover w-full h-full" />
         </div>
 
-        {/* Sign Up Link */}
-        <div className="text-center mt-8">
-          <p className="text-gray-500">
-            Or Sign up Using
-            <Link
-              to="/register"
-              className="text-purple-500 font-semibold hover:underline ml-1"
+        {/* Form */}
+        <div className="bg-white ml-5 p-12 rounded  w-full max-w-md">
+          {/* Title */}
+          <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h1>
+          {/* Login Form */}
+          <form>
+            {/* Username Input */}
+            <div className="mb-4">
+              <label className="block font-semibold text-gray-600 text-sm mb-2">Username</label>
+              <input
+                type="text"
+                placeholder="Type your username"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              />
+            </div>
+
+            {/* Password Input */}
+            <div className="mb-4">
+              <label className="block font-semibold text-gray-600 text-sm mb-2">Password</label>
+              <input
+                type="password"
+                placeholder="Type your password"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              />
+            </div>
+
+            {/* Forgot Password */}
+            <div className="flex justify-between items-center mb-6">
+              <span></span>
+              <Link
+                onClick={openModal}
+                className="text-sm text-purple-500 hover:underline font-semibold"
+              >
+                Forgot password?
+              </Link>
+            </div>
+
+            {/* Login Button */}
+            <button
+              type="submit"
+              className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-lg hover:opacity-90 transition"
             >
-              Sign up
-            </Link>
-          </p>
+              LOGIN
+            </button>
+          </form>
+
+          {/* Social Login */}
+          <div className="text-center mt-6">
+            <p className="text-sm text-gray-500">Or Sign up Using</p>
+            <div className="flex justify-center space-x-4 mt-4">
+              <button onClick={googleLogin} className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition">
+                <FaGoogle />
+              </button>
+            </div>
+          </div>
+
+          {/* Sign Up Link */}
+          {/* <div className="text-center mt-8">
+            <p className="text-gray-500">
+              Or Sign up Using
+              <Link
+                to="/register"
+                className="text-purple-500 font-semibold hover:underline ml-1"
+              >
+                Sign up
+              </Link>
+            </p>
+          </div> */}
         </div>
       </div>
 
