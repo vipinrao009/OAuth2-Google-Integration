@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGoogle} from "react-icons/fa";
 import {useGoogleLogin} from "@react-oauth/google"
+import {googleAuth} from "../api.js"
 
 const Login = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,7 +17,10 @@ const Login = () => {
 
   const googleResponse = async(authResult)=>{
     try {
-        console.log(authResult)
+      if(authResult['code']){
+        const result = await googleAuth(authResult['code'])
+        const {name,email,image} = result.data.user
+      }
     } catch (error) {
         console.error('Error while requesting google code : ',error)
     }
