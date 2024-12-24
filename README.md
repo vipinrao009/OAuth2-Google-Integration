@@ -13,11 +13,11 @@ This project demonstrates how to integrate Google OAuth2.0 authentication into y
 ---
 
 ## Tech Stack
-- **Frontend**: React.js, HTML, CSS, JavaScript
+- **Frontend**: React.js,Tailwind CSS, JavaScript
 - **Backend**: Node.js, Express.js
 - **Authentication Library**: Google OAuth2.0 API, Passport.js
 - **Environment Configuration**: dotenv
-- **Database**: MongoDB (optional)
+- **Database**: MongoDB
 
 ---
 
@@ -37,7 +37,7 @@ This project demonstrates how to integrate Google OAuth2.0 authentication into y
 
 ### 1. Clone the Repository
 ```bash
-$ git clone https://github.com/<your-username>/OAuth2-Google-Integration.git
+$ git clone https://github.com/vipinrao009/OAuth2-Google-Integration.git
 $ cd OAuth2-Google-Integration
 ```
 
