@@ -1,8 +1,14 @@
 import React from 'react';
 import Layout from '../Layout/Layout';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+    const navigate = useNavigate()
     const user = getUserData();
+    const handleLogout =()=>{
+        localStorage.removeItem('user')
+        navigate("/")
+    }
 
     return (
       <Layout>
@@ -24,7 +30,7 @@ const Dashboard = () => {
                         <h5 className=" font-semibold">{user.email}</h5>                    
                     </div>
 
-                    <button className='bg-blue-500 w-full px-1 py-2 mt-3 text-white rounded-md hover:bg-blue-600'>Logout</button>
+                    <button onClick={handleLogout} className='bg-blue-500 w-full px-1 py-2 mt-3 text-white rounded-md hover:bg-blue-600'>Logout</button>
                     
                 </div>
             </div>
